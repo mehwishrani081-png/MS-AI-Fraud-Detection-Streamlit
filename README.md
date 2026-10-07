@@ -1,28 +1,29 @@
 # MS-AI-Fraud-Detection-Streamlit
 
-Streamlit dashboard for the MS Artificial Intelligence assignment **Detecting Fraud and Intrusions in Imbalanced, Evolving Data** — Track A: ULB Credit Card Fraud Detection.
+Streamlit companion for the corrected MS AI Assignment 1. The app loads **precomputed fresh-run artifacts** from `outputs/` and does not re-tune models in the cloud.
 
-## Included sections
-- Data understanding and preprocessing
-- Duplicate and correlation analysis
-- Informative features
-- Random and temporal splits
-- Supervised models
-- Five imbalance strategies
-- Rare-event evaluation and cost-sensitive thresholds
-- McNemar significance testing
-- Anomaly detection
-- Label-budget experiment
-- Temporal drift
-- Explainability
-- Leakage audit
+## Streamlit Cloud
+- Repository: `mehwishrani081-png/MS-AI-Fraud-Detection-Streamlit`
+- Branch: `main`
+- Main file: `app.py`
+- Python runtime: `python-3.13.5`
 
-All numerical values displayed in the app come from the executed notebook analysis. No fabricated performance results are used.
+## Local test
+```bash
+python -m venv .venv
+source .venv/bin/activate   # Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+streamlit run app.py
+```
 
-## Deploy on Streamlit Community Cloud
-Use:
-- **Repository:** `mehwishrani081-png/MS-AI-Fraud-Detection-Streamlit`
-- **Branch:** `main`
-- **Main file:** `app.py`
+## Git push commands
+```bash
+git add app.py requirements.txt runtime.txt .gitignore README.md outputs/
+git commit -m "Update Streamlit app with corrected fresh assignment artifacts"
+git push origin main
+```
 
-Then click **Deploy** in Streamlit Community Cloud.
+## Redeploy check
+Streamlit Community Cloud auto-redeploys the tracked `main` branch. Open **Manage app → Logs** to confirm the new commit was built. Use **Reboot app** only if the cloud process remains stale after the new commit is visible.
+
+`creditcard.csv` is intentionally not committed. The demo uses a 300-row test sample and the compressed final Random Forest model.
