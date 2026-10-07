@@ -1,1 +1,492 @@
-{"dataset":{"source":"Kaggle mlg-ulb/creditcardfraud; ULB Machine Learning Group","sha256":"76274b691b16a6c49d3f159c883398e03ccd6d1ee12d9d8ee38f4b4b98551a89","raw_shape":[284807,31],"sampling_main":"none"},"class_counts_raw":{"0":284315,"1":492},"class_counts_clean":{"0":283253,"1":473},"duplicates_total":1081,"clean_shape":[283726,31],"imbalance_ratio_clean":598.8435517970402,"random_split":{"train":{"n":198608,"fraud":331,"rate":0.0016665995327479256},"validation":{"n":42559,"fraud":71,"rate":0.0016682722808336662},"test":{"n":42559,"fraud":71,"rate":0.0016682722808336662}},"temporal_split":{"train":{"n":198607,"fraud":366,"rate":0.0018428353482002145,"time_min":0.0,"time_max":132905.0},"validation":{"n":42558,"fraud":55,"rate":0.0012923539640020678,"time_min":132906.0,"time_max":151319.0},"test":{"n":42561,"fraud":52,"rate":0.0012217758041399402,"time_min":151320.0,"time_max":172792.0}},"temporal_tie_handling":"Equal Time values are moved wholly to the later partition, yielding strictly ordered boundaries.","selection_rule":"highest validation PR-AUC among full-training refits of tuned architectures","final_model":"Random Forest","leakage_demo":{"proper_mean":0.8139342128881708,"leaky_smote_before_cv_mean":0.9993648157289966,"inflation":0.1854306028408258,"explanation":"pre-CV SMOTE creates synthetic neighbours from samples that later enter validation folds"},"mcnemar":{"models":["Random Forest","LightGBM"],"thresholds":[0.29729454290891816,0.17760860356912953],"table":[[42532,3],[4,20]],"b":3,"c":4,"disagreements":7,"exact_stat":3.0,"exact_p":1.0,"cc_chi2":0.0,"cc_p":1.0},"wilcoxon":{"folds1":[0.7951002289422774,0.8503677778618836,0.8218479345149772,0.9173865564122287,0.921778014192875],"folds2":[0.8431853585763031,0.848612762640154,0.9381951354717726,0.8951945338132132,0.7540651726966541],"stat":7.0,"p":1.0},"bootstrap_ci":{"Random Forest":{"precision":{"low":0.7714051522248244,"high":0.941218487394958},"recall":{"low":0.6901170536733917,"high":0.8809624697336561},"f1":{"low":0.7441860465116279,"high":0.8936295369211514},"mcc":{"low":0.7456082159604687,"high":0.8940048653156437},"pr_auc":{"low":0.6916227243539206,"high":0.8769590484824646},"cost":{"low":817.3262500000001,"high":6469.374999999997}},"LightGBM":{"precision":{"low":0.8194128787878787,"high":0.9701492537313433},"recall":{"low":0.655530303030303,"high":0.8589743589743589},"f1":{"low":0.7419215795328142,"high":0.8933333333333333},"mcc":{"low":0.7472565997774283,"high":0.8942953270788758},"pr_auc":{"low":0.6886389223395115,"high":0.8895091593048665},"cost":{"low":803.8457500000001,"high":6489.628499999998}}},"best_anomaly":"LOF | Semi-supervised","label_budget_first_win":1,"label_budget_100_matches_main":true,"shap_cases":[{"case":1,"type":"TP","source_index":6609,"true":1,"pred":1,"score":0.9692164067021752,"threshold":0.29729454290891816,"top":[{"feature":"V12","value":-8.24326243368313,"shap":0.2216967420062141,"direction":"toward fraud"},{"feature":"V17","value":-4.21448627485607,"shap":0.2054546257438277,"direction":"toward fraud"},{"feature":"V14","value":-6.59055029705192,"shap":0.1986409444999647,"direction":"toward fraud"},{"feature":"V10","value":-6.19988176274188,"shap":0.12255371533877878,"direction":"toward fraud"},{"feature":"V11","value":4.36671348631445,"shap":0.06009291494408907,"direction":"toward fraud"}],"line1":"Score 0.9692 vs threshold 0.2973. V12=-8.243 (toward fraud) and V17=-4.214 (toward fraud) were the strongest local drivers.","line2":"This confirmed fraud is dominated by a pronounced V12 shift reinforced by V17. The joint PCA pattern closely matches the model region learned from confirmed frauds."},{"case":2,"type":"TP","source_index":223366,"true":1,"pred":1,"score":0.7661620869173672,"threshold":0.29729454290891816,"top":[{"feature":"V14","value":-7.55572894101666,"shap":0.3830026413623194,"direction":"toward fraud"},{"feature":"V10","value":-2.73279196653765,"shap":0.06739501355603662,"direction":"toward fraud"},{"feature":"V12","value":-3.541687479312,"shap":0.05302893917780769,"direction":"toward fraud"},{"feature":"V4","value":5.44805969239449,"shap":0.03957341916287932,"direction":"toward fraud"},{"feature":"V7","value":-1.8085744418815,"shap":0.03926061806243976,"direction":"toward fraud"}],"line1":"Score 0.7662 vs threshold 0.2973. V14=-7.556 (toward fraud) and V10=-2.733 (toward fraud) were the strongest local drivers.","line2":"V14 supplied the dominant fraud evidence in this confirmed case, while V10 added independent support. Several transformed signals agree rather than one raw field driving the alert."},{"case":3,"type":"TP","source_index":241445,"true":1,"pred":1,"score":0.9596168696168696,"threshold":0.29729454290891816,"top":[{"feature":"V17","value":-6.71717654755023,"shap":0.3026169796840709,"direction":"toward fraud"},{"feature":"V14","value":-7.62431631397779,"shap":0.22632292242386948,"direction":"toward fraud"},{"feature":"V10","value":-4.75993137385013,"shap":0.11638902671920365,"direction":"toward fraud"},{"feature":"V11","value":3.64225693939881,"shap":0.0700375818055005,"direction":"toward fraud"},{"feature":"V16","value":-4.07999232998846,"shap":0.04785762348989153,"direction":"toward fraud"}],"line1":"Score 0.9596 vs threshold 0.2973. V17=-6.717 (toward fraud) and V14=-7.624 (toward fraud) were the strongest local drivers.","line2":"This confirmed fraud combines a very strong V17 contribution with an extreme V14 pattern. Their agreement places the transaction deep inside a fraud-like part of model space."},{"case":4,"type":"FP","source_index":10620,"true":0,"pred":1,"score":0.41,"threshold":0.29729454290891816,"top":[{"feature":"V12","value":-15.1178893864435,"shap":0.13443550197003548,"direction":"toward fraud"},{"feature":"V14","value":-13.6240915668357,"shap":0.12772083350307517,"direction":"toward fraud"},{"feature":"V17","value":-16.8253442775322,"shap":0.12138824673567719,"direction":"toward fraud"},{"feature":"V26","value":-0.313184611381896,"shap":-0.07625722359183441,"direction":"toward legitimate"},{"feature":"V16","value":-10.1155599523526,"shap":0.06830383411792326,"direction":"toward fraud"}],"line1":"Score 0.4100 vs threshold 0.2973. V12=-15.118 (toward fraud) and V14=-13.624 (toward fraud) were the strongest local drivers.","line2":"This legitimate transaction became a false alarm because V12 and V14 jointly resembled known fraud profiles. The case illustrates real class overlap and is suitable for analyst review."},{"case":5,"type":"FP","source_index":190041,"true":0,"pred":1,"score":0.9012345473251335,"threshold":0.29729454290891816,"top":[{"feature":"V17","value":-3.53261634329382,"shap":0.27638776032550916,"direction":"toward fraud"},{"feature":"V14","value":-5.5423572675001,"shap":0.2385875844051686,"direction":"toward fraud"},{"feature":"V10","value":-4.40702550791431,"shap":0.15356111643523754,"direction":"toward fraud"},{"feature":"V11","value":3.51681320853012,"shap":0.05411164256354231,"direction":"toward fraud"},{"feature":"V9","value":-2.63392684799029,"shap":0.021882293313007548,"direction":"toward fraud"}],"line1":"Score 0.9012 vs threshold 0.2973. V17=-3.533 (toward fraud) and V14=-5.542 (toward fraud) were the strongest local drivers.","line2":"Despite being legitimate, this transaction shows a fraud-like V17/V14 combination strong enough to cross the threshold. Its high score is explainable as feature-pattern overlap."},{"case":6,"type":"FN","source_index":249239,"true":1,"pred":0,"score":0.0003483059718746466,"threshold":0.29729454290891816,"top":[{"feature":"V14","value":0.984993219111346,"shap":-0.0004203870247931834,"direction":"toward legitimate"},{"feature":"V4","value":0.163310074791927,"shap":-0.0003477852892509069,"direction":"toward legitimate"},{"feature":"V17","value":-0.0524194348357059,"shap":-0.0002929260982347562,"direction":"toward legitimate"},{"feature":"V12","value":0.979674835308759,"shap":-0.0002757447234493361,"direction":"toward legitimate"},{"feature":"V10","value":-1.13445381068391,"shap":-0.00018236595122515326,"direction":"toward legitimate"}],"line1":"Score 0.0003 vs threshold 0.2973. V14=0.985 (toward legitimate) and V4=0.163 (toward legitimate) were the strongest local drivers.","line2":"This fraud was missed because its strongest local effects pushed toward legitimacy and the total score stayed far below threshold. Its nearest confirmed fraud is still separated in standardized top-feature space, indicating an atypical fraud pattern.","fn_investigation":{"nearest_fraud_distance":1.9481643546898835,"nearest_fraud_index":214775,"vs_fraud_median":[{"feature":"V14","case":0.984993219111346,"fraud_median":-6.77109672468083},{"feature":"V4","case":0.163310074791927,"fraud_median":4.12754860722303},{"feature":"V17","case":-0.0524194348357059,"fraud_median":-5.58579436647491}]}}],"agreement":{"spearman":0.5661846496106785,"spearman_p":0.0011087476707346332,"top10_jaccard":0.5384615384615384,"top10_overlap":["V10","V12","V14","V16","V17","V28","V5"],"record_overlap_n":47,"record_overlap_pct":66.19718309859155},"recommendation_evidence":{"final_model":"Random Forest","final_strategy":"No treatment; operational threshold selected by validation cost","pr_auc":0.7875589769595567,"threshold":0.29729454290891816,"precision":0.8615384615384616,"recall":0.7887323943661971,"cost":3283.8,"saving_vs_nothing_pct":64.46361573349118,"best_anomaly":"LOF | Semi-supervised","best_anomaly_pr_auc":0.5074176466588284,"hybrid_cost":5073.610000000001,"hybrid_precision":0.8,"hybrid_recall":0.676056338028169},"final_operational_threshold":0.29729454290891816}
+{
+  "dataset": {
+    "source": "Kaggle mlg-ulb/creditcardfraud; ULB Machine Learning Group",
+    "sha256": "76274b691b16a6c49d3f159c883398e03ccd6d1ee12d9d8ee38f4b4b98551a89",
+    "raw_shape": [
+      284807,
+      31
+    ],
+    "sampling_main": "none"
+  },
+  "class_counts_raw": {
+    "0": 284315,
+    "1": 492
+  },
+  "class_counts_clean": {
+    "0": 283253,
+    "1": 473
+  },
+  "duplicates_total": 1081,
+  "clean_shape": [
+    283726,
+    31
+  ],
+  "imbalance_ratio_clean": 598.8435517970402,
+  "random_split": {
+    "train": {
+      "n": 198608,
+      "fraud": 331,
+      "rate": 0.0016665995327479256
+    },
+    "validation": {
+      "n": 42559,
+      "fraud": 71,
+      "rate": 0.0016682722808336662
+    },
+    "test": {
+      "n": 42559,
+      "fraud": 71,
+      "rate": 0.0016682722808336662
+    }
+  },
+  "temporal_split": {
+    "train": {
+      "n": 198607,
+      "fraud": 366,
+      "rate": 0.0018428353482002145,
+      "time_min": 0,
+      "time_max": 132905
+    },
+    "validation": {
+      "n": 42558,
+      "fraud": 55,
+      "rate": 0.0012923539640020678,
+      "time_min": 132906,
+      "time_max": 151319
+    },
+    "test": {
+      "n": 42561,
+      "fraud": 52,
+      "rate": 0.0012217758041399402,
+      "time_min": 151320,
+      "time_max": 172792
+    }
+  },
+  "temporal_tie_handling": "Equal Time values are moved wholly to the later partition, yielding strictly ordered boundaries.",
+  "selection_rule": "highest validation PR-AUC among full-training refits of tuned architectures",
+  "final_model": "Random Forest",
+  "leakage_demo": {
+    "proper_mean": 0.8139342128881708,
+    "leaky_smote_before_cv_mean": 0.9993648157289966,
+    "inflation": 0.1854306028408258,
+    "explanation": "pre-CV SMOTE creates synthetic neighbours from samples that later enter validation folds"
+  },
+  "mcnemar": {
+    "models": [
+      "Random Forest",
+      "LightGBM"
+    ],
+    "thresholds": [
+      0.29729454290891816,
+      0.17760860356912953
+    ],
+    "table": [
+      [
+        42532,
+        3
+      ],
+      [
+        4,
+        20
+      ]
+    ],
+    "b": 3,
+    "c": 4,
+    "disagreements": 7,
+    "exact_stat": 3,
+    "exact_p": 1,
+    "cc_chi2": 0,
+    "cc_p": 1
+  },
+  "wilcoxon": {
+    "folds1": [
+      0.7951002289422774,
+      0.8503677778618836,
+      0.8218479345149772,
+      0.9173865564122287,
+      0.921778014192875
+    ],
+    "folds2": [
+      0.8431853585763031,
+      0.848612762640154,
+      0.9381951354717726,
+      0.8951945338132132,
+      0.7540651726966541
+    ],
+    "stat": 7,
+    "p": 1
+  },
+  "bootstrap_ci": {
+    "Random Forest": {
+      "precision": {
+        "low": 0.7714051522248244,
+        "high": 0.941218487394958
+      },
+      "recall": {
+        "low": 0.6901170536733917,
+        "high": 0.8809624697336561
+      },
+      "f1": {
+        "low": 0.7441860465116279,
+        "high": 0.8936295369211514
+      },
+      "mcc": {
+        "low": 0.7456082159604687,
+        "high": 0.8940048653156437
+      },
+      "pr_auc": {
+        "low": 0.6916227243539206,
+        "high": 0.8769590484824646
+      },
+      "cost": {
+        "low": 817.3262500000001,
+        "high": 6469.374999999997
+      }
+    },
+    "LightGBM": {
+      "precision": {
+        "low": 0.8194128787878787,
+        "high": 0.9701492537313433
+      },
+      "recall": {
+        "low": 0.655530303030303,
+        "high": 0.8589743589743589
+      },
+      "f1": {
+        "low": 0.7419215795328142,
+        "high": 0.8933333333333333
+      },
+      "mcc": {
+        "low": 0.7472565997774283,
+        "high": 0.8942953270788758
+      },
+      "pr_auc": {
+        "low": 0.6886389223395115,
+        "high": 0.8895091593048665
+      },
+      "cost": {
+        "low": 803.8457500000001,
+        "high": 6489.628499999998
+      }
+    }
+  },
+  "best_anomaly": "LOF | Semi-supervised",
+  "label_budget_first_win": 1,
+  "label_budget_100_matches_main": true,
+  "shap_cases": [
+    {
+      "case": 1,
+      "type": "TP",
+      "source_index": 6609,
+      "true": 1,
+      "pred": 1,
+      "score": 0.9692164067021752,
+      "threshold": 0.29729454290891816,
+      "top": [
+        {
+          "feature": "V12",
+          "value": -8.24326243368313,
+          "shap": 0.2216967420062141,
+          "direction": "toward fraud"
+        },
+        {
+          "feature": "V17",
+          "value": -4.21448627485607,
+          "shap": 0.2054546257438277,
+          "direction": "toward fraud"
+        },
+        {
+          "feature": "V14",
+          "value": -6.59055029705192,
+          "shap": 0.1986409444999647,
+          "direction": "toward fraud"
+        },
+        {
+          "feature": "V10",
+          "value": -6.19988176274188,
+          "shap": 0.12255371533877878,
+          "direction": "toward fraud"
+        },
+        {
+          "feature": "V11",
+          "value": 4.36671348631445,
+          "shap": 0.06009291494408907,
+          "direction": "toward fraud"
+        }
+      ],
+      "line1": "Score 0.9692 vs threshold 0.2973. V12=-8.243 (toward fraud) and V17=-4.214 (toward fraud) were the strongest local drivers.",
+      "line2": "V12 and V17 jointly pushed this confirmed fraud strongly toward the fraud class; the pattern is a dense PCA signature rather than an unusually large transaction amount."
+    },
+    {
+      "case": 2,
+      "type": "TP",
+      "source_index": 223366,
+      "true": 1,
+      "pred": 1,
+      "score": 0.7661620869173672,
+      "threshold": 0.29729454290891816,
+      "top": [
+        {
+          "feature": "V14",
+          "value": -7.55572894101666,
+          "shap": 0.3830026413623194,
+          "direction": "toward fraud"
+        },
+        {
+          "feature": "V10",
+          "value": -2.73279196653765,
+          "shap": 0.06739501355603662,
+          "direction": "toward fraud"
+        },
+        {
+          "feature": "V12",
+          "value": -3.541687479312,
+          "shap": 0.05302893917780769,
+          "direction": "toward fraud"
+        },
+        {
+          "feature": "V4",
+          "value": 5.44805969239449,
+          "shap": 0.03957341916287932,
+          "direction": "toward fraud"
+        },
+        {
+          "feature": "V7",
+          "value": -1.8085744418815,
+          "shap": 0.03926061806243976,
+          "direction": "toward fraud"
+        }
+      ],
+      "line1": "Score 0.7662 vs threshold 0.2973. V14=-7.556 (toward fraud) and V10=-2.733 (toward fraud) were the strongest local drivers.",
+      "line2": "V14 and V10 were the dominant fraud-side signals in this confirmed fraud, giving a different local pattern from Case 1 and indicating that the model is not relying on one repeated template."
+    },
+    {
+      "case": 3,
+      "type": "TP",
+      "source_index": 241445,
+      "true": 1,
+      "pred": 1,
+      "score": 0.9596168696168696,
+      "threshold": 0.29729454290891816,
+      "top": [
+        {
+          "feature": "V17",
+          "value": -6.71717654755023,
+          "shap": 0.3026169796840709,
+          "direction": "toward fraud"
+        },
+        {
+          "feature": "V14",
+          "value": -7.62431631397779,
+          "shap": 0.22632292242386948,
+          "direction": "toward fraud"
+        },
+        {
+          "feature": "V10",
+          "value": -4.75993137385013,
+          "shap": 0.11638902671920365,
+          "direction": "toward fraud"
+        },
+        {
+          "feature": "V11",
+          "value": 3.64225693939881,
+          "shap": 0.0700375818055005,
+          "direction": "toward fraud"
+        },
+        {
+          "feature": "V16",
+          "value": -4.07999232998846,
+          "shap": 0.04785762348989153,
+          "direction": "toward fraud"
+        }
+      ],
+      "line1": "Score 0.9596 vs threshold 0.2973. V17=-6.717 (toward fraud) and V14=-7.624 (toward fraud) were the strongest local drivers.",
+      "line2": "V17 and V14 provided the strongest positive evidence for this confirmed fraud; their combined departure from ordinary transactions outweighed the smaller legitimate-side contributions."
+    },
+    {
+      "case": 4,
+      "type": "FP",
+      "source_index": 10620,
+      "true": 0,
+      "pred": 1,
+      "score": 0.41,
+      "threshold": 0.29729454290891816,
+      "top": [
+        {
+          "feature": "V12",
+          "value": -15.1178893864435,
+          "shap": 0.13443550197003548,
+          "direction": "toward fraud"
+        },
+        {
+          "feature": "V14",
+          "value": -13.6240915668357,
+          "shap": 0.12772083350307517,
+          "direction": "toward fraud"
+        },
+        {
+          "feature": "V17",
+          "value": -16.8253442775322,
+          "shap": 0.12138824673567719,
+          "direction": "toward fraud"
+        },
+        {
+          "feature": "V26",
+          "value": -0.313184611381896,
+          "shap": -0.07625722359183441,
+          "direction": "toward legitimate"
+        },
+        {
+          "feature": "V16",
+          "value": -10.1155599523526,
+          "shap": 0.06830383411792326,
+          "direction": "toward fraud"
+        }
+      ],
+      "line1": "Score 0.4100 vs threshold 0.2973. V12=-15.118 (toward fraud) and V14=-13.624 (toward fraud) were the strongest local drivers.",
+      "line2": "V12 and V14 looked unusually fraud-like even though the transaction was legitimate, illustrating class overlap in the PCA space and explaining why this record became a false alarm."
+    },
+    {
+      "case": 5,
+      "type": "FP",
+      "source_index": 190041,
+      "true": 0,
+      "pred": 1,
+      "score": 0.9012345473251335,
+      "threshold": 0.29729454290891816,
+      "top": [
+        {
+          "feature": "V17",
+          "value": -3.53261634329382,
+          "shap": 0.27638776032550916,
+          "direction": "toward fraud"
+        },
+        {
+          "feature": "V14",
+          "value": -5.5423572675001,
+          "shap": 0.2385875844051686,
+          "direction": "toward fraud"
+        },
+        {
+          "feature": "V10",
+          "value": -4.40702550791431,
+          "shap": 0.15356111643523754,
+          "direction": "toward fraud"
+        },
+        {
+          "feature": "V11",
+          "value": 3.51681320853012,
+          "shap": 0.05411164256354231,
+          "direction": "toward fraud"
+        },
+        {
+          "feature": "V9",
+          "value": -2.63392684799029,
+          "shap": 0.021882293313007548,
+          "direction": "toward fraud"
+        }
+      ],
+      "line1": "Score 0.9012 vs threshold 0.2973. V17=-3.533 (toward fraud) and V14=-5.542 (toward fraud) were the strongest local drivers.",
+      "line2": "V17 and V14 produced a strong fraud signature for this legitimate transaction; the high score therefore reflects a plausible but incorrect pattern match that warrants analyst review."
+    },
+    {
+      "case": 6,
+      "type": "FN",
+      "source_index": 249239,
+      "true": 1,
+      "pred": 0,
+      "score": 0.0003483059718746466,
+      "threshold": 0.29729454290891816,
+      "top": [
+        {
+          "feature": "V14",
+          "value": 0.984993219111346,
+          "shap": -0.0004203870247931834,
+          "direction": "toward legitimate"
+        },
+        {
+          "feature": "V4",
+          "value": 0.163310074791927,
+          "shap": -0.0003477852892509069,
+          "direction": "toward legitimate"
+        },
+        {
+          "feature": "V17",
+          "value": -0.0524194348357059,
+          "shap": -0.0002929260982347562,
+          "direction": "toward legitimate"
+        },
+        {
+          "feature": "V12",
+          "value": 0.979674835308759,
+          "shap": -0.0002757447234493361,
+          "direction": "toward legitimate"
+        },
+        {
+          "feature": "V10",
+          "value": -1.13445381068391,
+          "shap": -0.00018236595122515326,
+          "direction": "toward legitimate"
+        }
+      ],
+      "line1": "Score 0.0003 vs threshold 0.2973. V14=0.985 (toward legitimate) and V4=0.163 (toward legitimate) were the strongest local drivers.",
+      "line2": "V14 and V4 pushed this true fraud toward the legitimate class and kept its score below the operating threshold; its distance from typical fraud patterns confirms that this was an atypical fraud rather than a simple threshold error.",
+      "fn_investigation": {
+        "nearest_fraud_distance": 1.9481643546898835,
+        "nearest_fraud_index": 214775,
+        "vs_fraud_median": [
+          {
+            "feature": "V14",
+            "case": 0.984993219111346,
+            "fraud_median": -6.77109672468083
+          },
+          {
+            "feature": "V4",
+            "case": 0.163310074791927,
+            "fraud_median": 4.12754860722303
+          },
+          {
+            "feature": "V17",
+            "case": -0.0524194348357059,
+            "fraud_median": -5.58579436647491
+          }
+        ]
+      }
+    }
+  ],
+  "agreement": {
+    "spearman": 0.5661846496106785,
+    "spearman_p": 0.0011087476707346332,
+    "top10_jaccard": 0.5384615384615384,
+    "top10_overlap": [
+      "V10",
+      "V12",
+      "V14",
+      "V16",
+      "V17",
+      "V28",
+      "V5"
+    ],
+    "record_overlap_n": 47,
+    "record_overlap_pct": 66.19718309859155
+  },
+  "recommendation_evidence": {
+    "final_model": "Random Forest",
+    "final_strategy": "No treatment; operational threshold selected by validation cost",
+    "pr_auc": 0.7875589769595567,
+    "threshold": 0.29729454290891816,
+    "precision": 0.8615384615384616,
+    "recall": 0.7887323943661971,
+    "cost": 3283.8,
+    "saving_vs_nothing_pct": 64.46361573349118,
+    "best_anomaly": "LOF | Semi-supervised",
+    "best_anomaly_pr_auc": 0.5074176466588284,
+    "hybrid_cost": 5073.610000000001,
+    "hybrid_precision": 0.8,
+    "hybrid_recall": 0.676056338028169
+  },
+  "final_operational_threshold": 0.29729454290891816,
+  "versions": {
+    "pyod_requirement": "3.6.6 (deployment/reproducibility dependency; bonus experiment used sklearn MLPRegressor autoencoder)"
+  }
+}
