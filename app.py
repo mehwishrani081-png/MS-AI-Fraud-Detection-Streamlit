@@ -5,7 +5,6 @@ import pandas as pd
 import streamlit as st
 import joblib
 import sklearn
-import shap
 
 BASE = Path(__file__).resolve().parent
 
@@ -51,7 +50,10 @@ def load_model(path: Path):
 
 @st.cache_resource
 def load_explainer(model):
-    return shap.TreeExplainer(model) if model is not None else None
+    if model is None:
+        return None
+    import shap
+    return shap.TreeExplainer(model)
 
 R = load_json(RESULTS_PATH)
 if R is None:
