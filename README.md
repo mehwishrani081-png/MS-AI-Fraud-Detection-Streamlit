@@ -26,4 +26,4 @@ git push origin main
 ## Redeploy check
 Streamlit Community Cloud auto-redeploys the tracked `main` branch. Open **Manage app → Logs** to confirm the new commit was built. Use **Reboot app** only if the cloud process remains stale after the new commit is visible.
 
-`creditcard.csv` is intentionally not committed. The demo uses a 300-row test sample and the compressed final Random Forest model.
+`creditcard.csv` is intentionally not committed. The deployed demo uses actual precomputed evaluated test/SHAP cases from the fresh results artifact. The full submission ZIP also contains the compressed final Random Forest model and sample test CSV for local reproduction.
