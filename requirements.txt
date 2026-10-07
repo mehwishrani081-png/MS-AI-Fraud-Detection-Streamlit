@@ -12,4 +12,4 @@ joblib==1.5.2
 streamlit==1.50.0
 jupyter==1.1.1
 nbconvert==7.16.6
-pyod==2.0.5
+pyod==3.6.6
