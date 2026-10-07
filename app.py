@@ -158,33 +158,44 @@ elif page=="Recommendation":
 elif page=="Try a transaction":
     st.header("Try a transaction")
     model=load_model(MODEL_PATH); sample=load_csv(SAMPLE_PATH)
-    if model is None or sample is None:
-        st.error("Precomputed model/sample artifacts are unavailable.")
-        st.stop()
     features=["Time"]+[f"V{i}" for i in range(1,29)]+["Amount"]
-    mode=st.radio("Input",["Pick a saved test transaction","Upload CSV"])
-    row=None
-    if mode=="Pick a saved test transaction":
-        idx=st.selectbox("Sample row",list(range(len(sample))),format_func=lambda i:f"Row {i} | true Class={int(sample.iloc[i]['Class'])} | source_index={sample.iloc[i].get('source_index','n/a')}")
-        row=sample.iloc[[idx]][features].copy()
+    if model is None or sample is None:
+        st.warning("The connected GitHub deployment is missing the binary model/sample artifacts. Showing an actual precomputed test-case fallback. The downloadable submission includes the full model and upload-capable app.")
+        cases=R["shap_cases"]
+        labels=[f"Case {c['case']} — {c['type']} — source_index {c['source_index']}" for c in cases]
+        chosen=st.selectbox("Pick an actual evaluated test transaction",range(len(cases)),format_func=lambda k:labels[k])
+        case=cases[chosen]
+        prob=float(case["score"]); thr=float(R["final_operational_threshold"]); decision="FRAUD ALERT" if prob>=thr else "No alert"
+        c=st.columns(4)
+        c[0].metric("True class",case["true"]); c[1].metric("Fraud probability",f"{prob:.4f}"); c[2].metric("Cost-optimal threshold",f"{thr:.4f}"); c[3].metric("Decision",decision)
+        st.subheader("Actual precomputed SHAP evidence")
+        st.dataframe(pd.DataFrame(case["top"]),use_container_width=True,hide_index=True)
+        st.write(case["line1"]); st.write(case["line2"])
+        if case.get("fn_investigation"): st.json(case["fn_investigation"])
     else:
-        up=st.file_uploader("Upload CSV with the 30 required feature columns",type=["csv"])
-        if up is not None:
-            u=pd.read_csv(up); missing=[c for c in features if c not in u.columns]
-            if missing: st.error("Missing columns: "+", ".join(missing))
-            else: row=u[features].iloc[[0]].copy()
-    if row is not None:
-        prob=float(model.predict_proba(row)[0,1]); thr=float(R["final_operational_threshold"]); decision="FRAUD ALERT" if prob>=thr else "No alert"
-        c=st.columns(3); c[0].metric("Fraud probability",f"{prob:.4f}"); c[1].metric("Cost-optimal threshold",f"{thr:.4f}"); c[2].metric("Decision",decision)
-        st.dataframe(row,use_container_width=True,hide_index=True)
-        try:
-            ex=load_explainer(model); sv=ex.shap_values(row); sv=np.asarray(sv[1] if isinstance(sv,list) else sv); sv=sv[:,:,1] if sv.ndim==3 else sv
-            vals=sv[0]; order=np.argsort(np.abs(vals))[::-1][:8]
-            contrib=pd.DataFrame({"feature":[features[i] for i in order],"value":[float(row.iloc[0,i]) for i in order],"shap":[float(vals[i]) for i in order],"direction":["toward fraud" if vals[i]>0 else "toward legitimate" for i in order]})
-            st.subheader("Local SHAP explanation"); st.dataframe(contrib,use_container_width=True,hide_index=True)
-            st.caption("V1–V28 are PCA components; SHAP direction is model contribution, not an original business attribute.")
-        except Exception as exc:
-            st.warning(f"Prediction succeeded; SHAP failed gracefully: {exc}")
+        mode=st.radio("Input",["Pick a saved test transaction","Upload CSV"])
+        row=None
+        if mode=="Pick a saved test transaction":
+            idx=st.selectbox("Sample row",list(range(len(sample))),format_func=lambda k:f"Row {k} | true Class={int(sample.iloc[k]['Class'])} | source_index={sample.iloc[k].get('source_index','n/a')}")
+            row=sample.iloc[[idx]][features].copy()
+        else:
+            up=st.file_uploader("Upload CSV with the 30 required feature columns",type=["csv"])
+            if up is not None:
+                u=pd.read_csv(up); missing=[c for c in features if c not in u.columns]
+                if missing: st.error("Missing columns: "+", ".join(missing))
+                else: row=u[features].iloc[[0]].copy()
+        if row is not None:
+            prob=float(model.predict_proba(row)[0,1]); thr=float(R["final_operational_threshold"]); decision="FRAUD ALERT" if prob>=thr else "No alert"
+            c=st.columns(3); c[0].metric("Fraud probability",f"{prob:.4f}"); c[1].metric("Cost-optimal threshold",f"{thr:.4f}"); c[2].metric("Decision",decision)
+            st.dataframe(row,use_container_width=True,hide_index=True)
+            try:
+                ex=load_explainer(model); sv=ex.shap_values(row); sv=np.asarray(sv[1] if isinstance(sv,list) else sv); sv=sv[:,:,1] if sv.ndim==3 else sv
+                vals=sv[0]; order=np.argsort(np.abs(vals))[::-1][:8]
+                contrib=pd.DataFrame({"feature":[features[k] for k in order],"value":[float(row.iloc[0,k]) for k in order],"shap":[float(vals[k]) for k in order],"direction":["toward fraud" if vals[k]>0 else "toward legitimate" for k in order]})
+                st.subheader("Local SHAP explanation"); st.dataframe(contrib,use_container_width=True,hide_index=True)
+                st.caption("V1–V28 are PCA components; SHAP direction is model contribution, not an original business attribute.")
+            except Exception as exc:
+                st.warning(f"Prediction succeeded; SHAP failed gracefully: {exc}")
 
 st.divider()
 st.caption("Academic demonstration only; not a production banking decision system.")
