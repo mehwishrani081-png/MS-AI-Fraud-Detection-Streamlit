@@ -86,7 +86,7 @@ elif page == "Model Comparison":
             strategies=strategies[strategies[model_col].isin(chosen)]
         st.dataframe(strategies,use_container_width=True,hide_index=True)
     st.success(f"Selection rule: {R['selection_rule']} Final model: **{R['final_model']}**.")
-    st.markdown(f"Correct-pipeline CV PR-AUC vs deliberate pre-CV SMOTE leakage: **{R['leakage_demo']['correct_cv_pr_auc']:.4f} vs {R['leakage_demo']['leaky_cv_pr_auc']:.4f}**.")
+    st.markdown(f"Correct-pipeline CV PR-AUC vs deliberate pre-CV SMOTE leakage: **{R['leakage_demo']['proper_mean']:.4f} vs {R['leakage_demo']['leaky_smote_before_cv_mean']:.4f}**.")
 
 elif page == "Evaluation":
     st.header("Rare-event evaluation")
@@ -97,7 +97,7 @@ elif page == "Evaluation":
     show_table("costs.csv")
     m=R["mcnemar"]
     st.markdown(f"**McNemar:** table `{m['table']}`, b={m['b']}, c={m['c']}, disagreements={m['disagreements']}, exact p={m['exact_p']:.4f}, continuity-corrected p={m['cc_p']:.4f}.")
-    st.markdown(f"**Wilcoxon 5-fold PR-AUC check:** statistic={R['wilcoxon']['statistic']:.4f}, p={R['wilcoxon']['p_value']:.4f}.")
+    st.markdown(f"**Wilcoxon 5-fold PR-AUC check:** statistic={R['wilcoxon']['stat']:.4f}, p={R['wilcoxon']['p']:.4f}.")
     st.json(R["bootstrap_ci"])
 
 elif page == "Anomaly Detection":
